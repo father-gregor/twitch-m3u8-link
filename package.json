@@ -13,5 +13,8 @@
     "nodejs",
     "heroku"
   ],
-  "licence": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
 }
