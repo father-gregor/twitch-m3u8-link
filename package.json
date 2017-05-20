@@ -1,0 +1,17 @@
+{
+  "name": "twitch-m3u8-link",
+  "version": "0.1.0",
+  "description": "Webtool for retrieving stream direct link",
+  "engines": {
+    "node": "6.10.2"
+  },
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "nodejs",
+    "heroku"
+  ],
+  "licence": "MIT"
+}
