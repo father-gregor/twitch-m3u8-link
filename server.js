@@ -10,9 +10,13 @@ app.get("/", function(req, res) {
   res.sendFile(__dirname + "/src/views/index.html");
 });
 app.get("/get-stream", function(req, res) {
-  var streamName = "stream";
-  console.log("In Server.js");
-  twitch.getStream(streamName);	
+  var streamName = req.query.channel;
+  console.log("In Server.js " + streamName);
+  if(streamName !== null) {
+  	twitch.getHlsStream(streamName);
+  } else {
+  	res.send("Error");
+  }
 });
 
 app.listen(app.get("port"), function() {
