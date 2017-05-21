@@ -13,9 +13,9 @@ app.get("/get-stream", function(req, res) {
   var streamName = req.query.channel;
   console.log("In Server.js " + streamName);
   if(streamName !== null) {
-  	twitch.getHlsStream(streamName, res, sendResp);
+  	twitch.getHlsStream(streamName, res);
   } else {
-  	res.send("Error");
+  	res.send({"error": "null_name"});
   }
 });
 function sendResp(res) {

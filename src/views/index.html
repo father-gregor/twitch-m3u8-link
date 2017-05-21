@@ -11,18 +11,35 @@
   <![endif]-->
 </head>
 <body ng-app="TwitchApp">
-  <div class="container" ng-controller="StreamEntryController" style="width:100%;min-height:300px;background-color:#4b367c">
+  <div class="container" ng-controller="StreamSearchController" style="width:100%;min-height:300px;background-color:#4b367c">
     <div class="top-title" style="text-align:center;margin-top:80px">
       <h1 style="color: white;margin-bottom:25px">
         Get direct link for <a href="https://www.twitch.tv"><img src="/img/twitchlogo.svg" style="width:10%"></a> stream
       </h1>
       <div class="form-group" style="width:500px;margin:0 auto;float:none">
         <button class="btn btn-default" ng-click="checkField()" style="margin-right: 10px">Search</button>
-        <input type="text" ng-model="streamer" class="form-control" placeholder="Stream name" style="width:70%;display:inline-block">
+        <input type="text" ng-model="$root.streamer" class="form-control" placeholder="Stream name" style="width:70%;display:inline-block">
       </div>
     </div>
   </div>
-  <a href="/get-stream?name=c_a_k_e">CAKE</a>
+  <div class="container" ng-controller="StreamQualityListController" ng-hide="streamArray == null">
+    <h2>Available HLS links for {{streamer}}</h2>
+    <p>Every link in .m3u8 format listed in table:</p>            
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Quality</th>
+          <th>HLS(M3U8)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="stream in streamArray">
+          <td>{{stream.quality}}</td>
+          <td><a href="{{stream.url}}">{{substringUrl(stream.url)}}</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
 
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>

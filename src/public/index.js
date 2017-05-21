@@ -5,10 +5,10 @@ var app = angular.module('TwitchApp', ["ngRoute"]);
 		controller: ""
 	})
 })*/
-app.controller('StreamEntryController', function($rootScope, $scope, $http, $q){
-	$scope.streamer = null;
+app.controller('StreamSearchController', function($rootScope, $scope, $http, $q){
+	$rootScope.streamer = null;
 	$scope.checkField = function() {
-		if($scope.streamer !== null) {
+		if($rootScope.streamer !== null) {
 			console.log("Input not empty");
 			$scope.getHlsStream();
 		}
@@ -16,11 +16,17 @@ app.controller('StreamEntryController', function($rootScope, $scope, $http, $q){
 	$scope.getHlsStream = function() {
 		$http.get("/get-stream", {
 			params: {
-				"channel": $scope.streamer
+				"channel": $rootScope.streamer
 			}
 		}).then(function(res) {
 			console.log("Received");
 			console.log(res);
+			$rootScope.streamArray = res.data;
 		});
+	}
+})
+app.controller('StreamQualityListController', function($rootScope, $scope){
+	$scope.substringUrl = function(url) {
+		return url.length > 100 ? url.substring(0,100) + "...": url;
 	}
 })

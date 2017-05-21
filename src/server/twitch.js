@@ -25,10 +25,12 @@ var access_token = {
 	}
 };
 var client_id = "ta24w6i5cmq57c7mszjirohc2ub9ge";
-var stream_list = null;
+var stream_list = [];
+var response = null;
 
-function getHlsStream(channel, resp, returnResponse) {
+function getHlsStream(channel, resp) {
 	console.log("Received - " + channel);
+	response = resp;
 	access_token.channel = channel;
 	agent
 		.get(check_live_stream + channel)
@@ -42,7 +44,7 @@ function getHlsStream(channel, resp, returnResponse) {
 					getAccessParams(channel);
 				} else {
 					console.log("Stream is OFFLINE");
-					resp.send({"error": "offline"});
+					response.send({"error": "offline"});
 				}
 			}
 
@@ -61,7 +63,7 @@ function getAccessParams(channel) {
 				var params = JSON.stringify(res.body);
 				console.log(params);
 				getStreamList(params, channel);
-				returnResponse(resp);
+				//returnResponse(resp);
 			}
 		});
 }
@@ -79,6 +81,10 @@ function getStreamList(params, channel) {
 				var hlsFileContent = Buffer.from(res.body);
 				console.log(hlsFileContent.toString() + "\n");
 				parseHlsFile(hlsFileContent.toString());
+				if(stream_list != null) {
+					response.send(stream_list);
+					stream_list = [];
+				}
 			}
 		});
 }
@@ -86,8 +92,11 @@ function parseHlsFile(hlsFileStr) {
 	var pattern = /#EXT-X-MEDIA.+NAME=\"(.+)\".+\n#EXT-X-STREAM-INF.+\n(.+)/g;
 	var resArr = null;
 	while((resArr = pattern.exec(hlsFileStr)) != null) {
-		console.log(resArr[1]);
-		console.log(resArr[2] + "\n");
+		var streamObj = {
+			quality: resArr[1],
+			url: resArr[2]
+		};
+		stream_list.push(streamObj);
 	}
 }
 module.exports = {
