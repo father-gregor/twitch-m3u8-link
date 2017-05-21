@@ -1,16 +1,19 @@
 "use strict";
 var http = require("http");
 var agent = require("superagent");
+var check_live_stream = "https://api.twitch.tv/kraken/streams/"
 var hls_url =  {
 	"base": "https://usher.ttvnw.net/api/channel/hls/",
 	"channel": null,
 	"params": null,
 	getHlsUrl: function() {
 		return this.base + this.channel + this.params;
-	}
-	setHlsUrl: function(params) {
+	},
+	setHlsUrl: function(params, channel) {
 		var paramsObj = JSON.parse(params);
-		this.params = ".m3u8?token=" + paramsObj.token + "&sig=" + paramsObj.sig + "&allow_source=true&allow_spectre=true";
+		this.channel = channel;
+		this.params = ".m3u8?token=" + encodeURI(paramsObj.token) + "&sig=" + paramsObj.sig + 
+			"&allow_source=true&allow_spectre=true&player_backend=html5&expgroup=&baking_bread=false";
 	}
 };
 var access_token = {
@@ -22,10 +25,30 @@ var access_token = {
 	}
 };
 var client_id = "ta24w6i5cmq57c7mszjirohc2ub9ge";
+var stream_list = null;
 
 function getHlsStream(channel, resp, returnResponse) {
 	console.log("Received - " + channel);
 	access_token.channel = channel;
+	agent
+		.get(check_live_stream + channel)
+		.set("user-agent", "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36")
+		.set("client-id", client_id)
+		.end(function(err, res) {
+			if(err || !res.ok) {
+				console.log(err);
+			} else {
+				if(res.body.stream != null) {
+					getAccessParams(channel);
+				} else {
+					console.log("Stream is OFFLINE");
+					resp.send({"error": "offline"});
+				}
+			}
+
+		});
+}
+function getAccessParams(channel) {
 	agent
 		.get(access_token.getAccessTokenUrl())
 		.set("user-agent", "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36")
@@ -37,25 +60,35 @@ function getHlsStream(channel, resp, returnResponse) {
 			} else {
 				var params = JSON.stringify(res.body);
 				console.log(params);
-				if(params !== null) {
-					getStreamList(params);
-					returnResponse(resp);
-				}
+				getStreamList(params, channel);
+				returnResponse(resp);
 			}
 		});
 }
-function getStreamList(params) {
-	hls_url.setHlsUrl(params);
+function getStreamList(params, channel) {
+	hls_url.setHlsUrl(params, channel);
+	console.log(hls_url.getHlsUrl());
 	agent
 		.get(hls_url.getHlsUrl())
+		.responseType('blob')
 		.set("user-agent", "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36")
 		.end(function(err, res) {
 			if(err || !res.ok) {
-
+				console.log(err);
 			} else {
-				console.log(res.body);
+				var hlsFileContent = Buffer.from(res.body);
+				console.log(hlsFileContent.toString() + "\n");
+				parseHlsFile(hlsFileContent.toString());
 			}
 		});
+}
+function parseHlsFile(hlsFileStr) {
+	var pattern = /#EXT-X-MEDIA.+NAME=\"(.+)\".+\n#EXT-X-STREAM-INF.+\n(.+)/g;
+	var resArr = null;
+	while((resArr = pattern.exec(hlsFileStr)) != null) {
+		console.log(resArr[1]);
+		console.log(resArr[2] + "\n");
+	}
 }
 module.exports = {
 	getHlsStream
