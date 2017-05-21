@@ -19,6 +19,7 @@ app.controller('StreamEntryController', function($rootScope, $scope, $http, $q){
 				"channel": $scope.streamer
 			}
 		}).then(function(res) {
+			console.log("Received");
 			console.log(res);
 		});
 	}

@@ -13,12 +13,14 @@ app.get("/get-stream", function(req, res) {
   var streamName = req.query.channel;
   console.log("In Server.js " + streamName);
   if(streamName !== null) {
-  	twitch.getHlsStream(streamName);
+  	twitch.getHlsStream(streamName, res, sendResp);
   } else {
   	res.send("Error");
   }
 });
-
+function sendResp(res) {
+	res.send("OK");
+}
 app.listen(app.get("port"), function() {
 	console.log("Server started on port " + app.get("port"));
 });
