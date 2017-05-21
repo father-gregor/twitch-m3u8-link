@@ -10,22 +10,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
   <![endif]-->
 </head>
-<body>
-  <div class="container" style="width:100%;height:300px;background-color:#4b367c">
-    <div class="top-title" style="text-align:center">
-      <h1 style="color: white">
-        Get direct link for Twitch stream
+<body ng-app="TwitchApp">
+  <div class="container" ng-controller="StreamEntryController" style="width:100%;min-height:300px;background-color:#4b367c">
+    <div class="top-title" style="text-align:center;margin-top:80px">
+      <h1 style="color: white;margin-bottom:25px">
+        Get direct link for <a href="https://www.twitch.tv"><img src="/img/twitchlogo.svg" style="width:10%"></a> stream
       </h1>
-      <div style="width:500px;margin: 0 auto;float: none">
-        <input type="text" class="form-control" placeholder="Stream name">
+      <div class="form-group" style="width:500px;margin:0 auto;float:none">
+        <button class="btn btn-default" ng-click="getHlsStream()" type="submit" style="margin-right: 10px">Search</button>
+        <input type="text" ng-model="streamer" class="form-control" placeholder="Stream name" style="width:70%;display:inline-block">
       </div>
     </div>
   </div>
   <a href="/get-stream?name=c_a_k_e">CAKE</a>
-  <script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="/index.js"></script>
 </body>
 </html>
