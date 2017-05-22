@@ -1,0 +1,15 @@
+.search-btn {
+	margin-right: 10px;
+    border-radius: 1px;
+    color: white;
+    border-color: darkred;
+    background-color: darkred;
+    margin-bottom: 2px;
+}
+.search-input {
+	width: 70%;
+    display: inline-block;
+    border-radius: 1px;
+    height: 33px;
+    border: 2px solid darkred;
+}

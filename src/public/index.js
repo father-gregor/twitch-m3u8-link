@@ -10,6 +10,25 @@ app.config(function($routeProvider, $locationProvider) {
 	});
 	$locationProvider.html5Mode(true);
 })
+app.controller('MainPageController', function($rootScope, $scope, $http){
+	$scope.loadPopularStream = function() {
+		$http.get("/api/get-popular-channel").then(function(res) {
+			$scope.popularChannelArray = res.data;
+			console.log(res.data);
+		});
+	}
+	$scope.checkChannel = function(name) {
+		console.log(name);
+		if(name !== null && name !== undefined) {
+			$rootScope.streamer = name;
+			$rootScope.getHlsStream($rootScope.streamer);
+		}
+	}
+	$scope.substringUrl = function(url) {
+		return url.length > 50 ? url.substring(0,50) + "...": url;
+	}
+	$scope.loadPopularStream();
+})
 app.controller('StreamSearchController', function($rootScope, $scope, $http, $location){
 	$rootScope.streamer = null;
 	$scope.checkField = function() {
@@ -35,23 +54,4 @@ app.controller('StreamQualityListController', function($rootScope, $scope){
 	$scope.substringUrl = function(url) {
 		return url.length > 100 ? url.substring(0,100) + "...": url;
 	}
-})
-app.controller('MainPageController', function($rootScope, $scope, $http){
-	$scope.loadPopularStream = function() {
-		$http.get("/api/get-popular-channel").then(function(res) {
-			$scope.popularChannelArray = res.data;
-			console.log(res.data);
-		});
-	}
-	$scope.checkChannel = function(name) {
-		console.log(name);
-		if(name !== null && name !== undefined) {
-			$rootScope.streamer = name;
-			$rootScope.getHlsStream($rootScope.streamer);
-		}
-	}
-	$scope.substringUrl = function(url) {
-		return url.length > 50 ? url.substring(0,50) + "...": url;
-	}
-	$scope.loadPopularStream();
 })

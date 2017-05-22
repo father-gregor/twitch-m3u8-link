@@ -7,6 +7,7 @@
   <meta name="description" content="Get m3u8 link for any stream">
   <meta name="author" content="father_gregor">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="/style/index.css">
   <link rel="stylesheet" type="text/css" href="/style/main_page.css">
   <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
@@ -19,8 +20,8 @@
         Get direct link for <a href="https://www.twitch.tv"><img src="/img/twitchlogo.png" style="width:3.5em"></a> stream
       </h1>
       <div class="form-group" style="width:500px;margin:0 auto;float:none">
-        <button class="btn btn-default" ng-click="checkField()" style="margin-right: 10px">Search</button>
-        <input type="text" ng-model="$root.streamer" class="form-control" placeholder="Stream name" style="width:70%;display:inline-block">
+        <button class="btn btn-default search-btn" ng-click="checkField()">Search</button>
+        <input type="text" ng-model="$root.streamer" class="form-control search-input" placeholder="Stream name">
       </div>
     </div>
   </div>
