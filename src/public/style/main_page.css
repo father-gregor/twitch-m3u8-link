@@ -1,0 +1,31 @@
+
+.gallery-title
+{
+    font-size: 36px;
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+.port-image
+{
+    width: 100%;
+}
+
+.channel_grid
+{
+    margin-bottom: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.channel_grid:hover {
+    cursor: pointer;
+}
+.channel_grid:hover > .info_grid {
+    background-color: #6441A4;
+    color: white;
+    cursor: pointer;
+}
+.info_grid h3 {
+    margin-top: 20px;
+}
