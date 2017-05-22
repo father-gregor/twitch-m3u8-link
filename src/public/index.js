@@ -1,11 +1,11 @@
 var app = angular.module('TwitchApp', ["ngRoute"]);
 app.config(function($routeProvider, $locationProvider) {
 	$routeProvider.when("/", {
-		templateUrl: "partials/main.html",
+		templateUrl: "partials/main_page.html",
 		controller: "MainPageController"
 	});
 	$routeProvider.when("/search-list", {
-		templateUrl: "partials/quality-list.html",
+		templateUrl: "partials/quality_list.html",
 		controller: "StreamQualityListController"
 	});
 	$locationProvider.html5Mode(true);
@@ -15,13 +15,13 @@ app.controller('StreamSearchController', function($rootScope, $scope, $http, $lo
 	$scope.checkField = function() {
 		if($rootScope.streamer !== null) {
 			console.log("Input not empty");
-			$scope.getHlsStream();
+			$scope.getHlsStream($rootScope.streamer);
 		}
 	}
-	$scope.getHlsStream = function() {
+	$rootScope.getHlsStream = function(channel) {
 		$http.get("/api/get-channel", {
 			params: {
-				"channel": $rootScope.streamer
+				"channel": channel
 			}
 		}).then(function(res) {
 			console.log("Received");
@@ -39,9 +39,19 @@ app.controller('StreamQualityListController', function($rootScope, $scope){
 app.controller('MainPageController', function($rootScope, $scope, $http){
 	$scope.loadPopularStream = function() {
 		$http.get("/api/get-popular-channel").then(function(res) {
-			$scope.popularChannels = res.data;
+			$scope.popularChannelArray = res.data;
 			console.log(res.data);
 		});
+	}
+	$scope.checkChannel = function(name) {
+		console.log(name);
+		if(name !== null && name !== undefined) {
+			$rootScope.streamer = name;
+			$rootScope.getHlsStream($rootScope.streamer);
+		}
+	}
+	$scope.substringUrl = function(url) {
+		return url.length > 50 ? url.substring(0,50) + "...": url;
 	}
 	$scope.loadPopularStream();
 })
