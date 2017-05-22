@@ -28,6 +28,19 @@ var client_id = "ta24w6i5cmq57c7mszjirohc2ub9ge";
 var stream_list = [];
 var response = null;
 
+function getPopularChannelList(resp) {
+	agent
+		.get(check_live_stream)
+		.set("user-agent", "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36")
+		.set("client-id", client_id)
+		.end(function(err, res) {
+			if(err || !res.ok) {
+				console.log(err);
+			} else {
+				resp.send(res.body.streams)
+			}
+		});
+}
 function getHlsStream(channel, resp) {
 	console.log("Received - " + channel);
 	response = resp;
@@ -100,5 +113,6 @@ function parseHlsFile(hlsFileStr) {
 	}
 }
 module.exports = {
-	getHlsStream
+	getHlsStream,
+	getPopularChannelList
 }
