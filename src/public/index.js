@@ -34,7 +34,7 @@ app.controller('StreamSearchController', function($rootScope, $scope, $http, $lo
 	$scope.checkField = function() {
 		if($rootScope.streamer !== null) {
 			console.log("Input not empty");
-			$scope.getHlsStream($rootScope.streamer);
+			$scope.getHlsStream($rootScope.streamer.toLowerCase());
 		}
 	}
 	$rootScope.getHlsStream = function(channel) {
