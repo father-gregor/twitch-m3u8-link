@@ -13,7 +13,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
   <![endif]-->
 </head>
-<body ng-app="TwitchApp">
+<body ng-app="TwitchApp" style="height:100%">
   <div class="container" ng-controller="StreamSearchController" style="width:100%;min-height:260px;background-color:#6441A4">
     <div class="top-title" style="text-align:center;margin-top:80px">
       <h1 style="color: white;margin-bottom:25px">
@@ -27,7 +27,9 @@
   </div>
   <div ng-view class="container">
   </div>
-
+  <div class="footer-main" style="margin-top:20px; background: #414142">
+    <h3 style="text-align:center; color: #efeff2; padding-top: 35px">Twitch HLS Search</h3>
+  </div>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>

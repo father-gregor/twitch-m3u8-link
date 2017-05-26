@@ -13,3 +13,9 @@
     height: 33px;
     border: 2px solid darkred;
 }
+.footer-main {
+	position: relative;
+	margin: 0;
+	padding-bottom: 2rem;
+	min-height: 100%;
+}
