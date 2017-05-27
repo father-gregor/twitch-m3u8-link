@@ -12,7 +12,7 @@ app.config(function($routeProvider, $locationProvider) {
 })
 app.controller('MainPageController', function($rootScope, $scope, $http){
 	$scope.loadPopularStream = function() {
-		$(".main-view").css("display", "block");
+		$rootScope.showLoadingView(false);
 		$http.get("/api/get-popular-channel").then(function(res) {
 			$scope.popularChannelArray = res.data;
 			console.log(res.data);
@@ -22,8 +22,6 @@ app.controller('MainPageController', function($rootScope, $scope, $http){
 		console.log(name);
 		if(name !== null && name !== undefined) {
 			$rootScope.streamer = name;
-			$(".loading").css("display", "block");
-			$(".main-view").css("display", "none");
 			$rootScope.getHlsStream($rootScope.streamer);
 		}
 	}
@@ -36,12 +34,13 @@ app.controller('StreamSearchController', function($rootScope, $scope, $http, $lo
 	$rootScope.streamer = null;
 	$rootScope.loadingFrame = "partials/loading_frame.html";
 	$scope.checkField = function() {
-		if($rootScope.streamer !== null) {
+		if($rootScope.streamer !== null ) {
 			console.log("Input not empty");
 			$scope.getHlsStream($rootScope.streamer.toLowerCase());
 		}
 	}
 	$rootScope.getHlsStream = function(channel) {
+		$rootScope.showLoadingView(true);
 		$http.get("/api/get-channel", {
 			params: {
 				"channel": channel
@@ -50,10 +49,23 @@ app.controller('StreamSearchController', function($rootScope, $scope, $http, $lo
 			console.log("Received");
 			console.log(res);
 			$rootScope.streamArray = res.data;
-			$(".loading").css("display", "none");
+			$rootScope.showLoadingView(false);
 			console.log($rootScope.streamArray);
 			$location.path("/search-list");
+		}, function(err) {
+			console.log(err);
+			$rootScope.showLoadingView(false);
 		});
+	}
+	$rootScope.showLoadingView = function(show) {
+		console.log(show);
+		if(show === true) {
+			$(".loading").css("display", "block");
+			$(".main-view").css("display", "none");
+		} else {
+			$(".loading").css("display", "none");
+			$(".main-view").css("display", "block");
+		}
 	}
 	$(".search-input").keypress(function(e) {
 		var key = e.which;
@@ -63,9 +75,12 @@ app.controller('StreamSearchController', function($rootScope, $scope, $http, $lo
 		}
 	})
 })
-app.controller('StreamQualityListController', function($rootScope, $scope){
+app.controller('StreamQualityListController', function($rootScope, $scope, $location){
 	$scope.isError = function() {
-		return $rootScope.streamArray.error;
+		if(typeof $rootScope.streamArray != "undefined")
+			return $rootScope.streamArray.error;
+		else
+			$location.path("/");
 	}
 	$scope.substringUrl = function(url) {
 		return url.length > 100 ? url.substring(0,100) + "...": url;
