@@ -72,6 +72,7 @@ function getAccessParams(channel) {
 		.end(function(err, res) {
 			if (err || !res.ok) {
 				console.log(err);
+				response.send({"error": "no_access"});
 			} else {
 				var params = JSON.stringify(res.body);
 				console.log(params);
@@ -90,6 +91,7 @@ function getStreamList(params, channel) {
 		.end(function(err, res) {
 			if(err || !res.ok) {
 				console.log(err);
+				response.send({"error": "no_access"});
 			} else {
 				var hlsFileContent = Buffer.from(res.body);
 				console.log(hlsFileContent.toString() + "\n");

@@ -12,7 +12,6 @@ app.config(function($routeProvider, $locationProvider) {
 })
 app.controller('MainPageController', function($rootScope, $scope, $http){
 	$scope.loadPopularStream = function() {
-		console.log("TRUE CALLED");
 		$(".main-view").css("display", "block");
 		$http.get("/api/get-popular-channel").then(function(res) {
 			$scope.popularChannelArray = res.data;
@@ -52,6 +51,7 @@ app.controller('StreamSearchController', function($rootScope, $scope, $http, $lo
 			console.log(res);
 			$rootScope.streamArray = res.data;
 			$(".loading").css("display", "none");
+			console.log($rootScope.streamArray);
 			$location.path("/search-list");
 		});
 	}
@@ -64,6 +64,9 @@ app.controller('StreamSearchController', function($rootScope, $scope, $http, $lo
 	})
 })
 app.controller('StreamQualityListController', function($rootScope, $scope){
+	$scope.isError = function() {
+		return $rootScope.streamArray.error;
+	}
 	$scope.substringUrl = function(url) {
 		return url.length > 100 ? url.substring(0,100) + "...": url;
 	}

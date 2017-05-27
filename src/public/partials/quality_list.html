@@ -1,16 +1,21 @@
-<h2>Available HLS links for {{streamer}}</h2>
-<p>Every link in .m3u8 format listed in table:</p>            
-<table class="table">
-  <thead>
-    <tr>
-      <th>Quality</th>
-      <th>HLS(M3U8)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="stream in streamArray">
-      <td>{{stream.quality}}</td>
-      <td><a href="{{stream.url}}">{{substringUrl(stream.url)}}</a></td>
-    </tr>
-  </tbody>
-</table>
+<div ng-hide="isError()">
+  <h2>Available HLS links for {{streamer}}</h2>
+  <p>Every link in .m3u8 format listed in table:</p>            
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Quality</th>
+        <th>HLS(M3U8)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="stream in streamArray">
+        <td>{{stream.quality}}</td>
+        <td><a href="{{stream.url}}">{{substringUrl(stream.url)}}</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div ng-hide="!isError()">
+  <h1 class="text-center" style="color: #ce0e0e; margin-top: 60px">No stream information available. Try again!</h1>
+</div>
