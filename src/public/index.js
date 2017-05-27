@@ -12,6 +12,8 @@ app.config(function($routeProvider, $locationProvider) {
 })
 app.controller('MainPageController', function($rootScope, $scope, $http){
 	$scope.loadPopularStream = function() {
+		console.log("TRUE CALLED");
+		$(".main-view").css("display", "block");
 		$http.get("/api/get-popular-channel").then(function(res) {
 			$scope.popularChannelArray = res.data;
 			console.log(res.data);
@@ -21,6 +23,8 @@ app.controller('MainPageController', function($rootScope, $scope, $http){
 		console.log(name);
 		if(name !== null && name !== undefined) {
 			$rootScope.streamer = name;
+			$(".loading").css("display", "block");
+			$(".main-view").css("display", "none");
 			$rootScope.getHlsStream($rootScope.streamer);
 		}
 	}
@@ -31,6 +35,7 @@ app.controller('MainPageController', function($rootScope, $scope, $http){
 })
 app.controller('StreamSearchController', function($rootScope, $scope, $http, $location){
 	$rootScope.streamer = null;
+	$rootScope.loadingFrame = "partials/loading_frame.html";
 	$scope.checkField = function() {
 		if($rootScope.streamer !== null) {
 			console.log("Input not empty");
@@ -46,9 +51,17 @@ app.controller('StreamSearchController', function($rootScope, $scope, $http, $lo
 			console.log("Received");
 			console.log(res);
 			$rootScope.streamArray = res.data;
+			$(".loading").css("display", "none");
 			$location.path("/search-list");
 		});
 	}
+	$(".search-input").keypress(function(e) {
+		var key = e.which;
+		if(key == 13) {
+			$(".search-btn").click();
+			return false;
+		}
+	})
 })
 app.controller('StreamQualityListController', function($rootScope, $scope){
 	$scope.substringUrl = function(url) {

@@ -12,6 +12,18 @@
 	border-color: #a50909;
 	border-radius: 1px;
 }
+.search-btn:focus {
+	background-color: #a50909;
+	color: white;
+	border-color: #a50909;
+	border-radius: 1px;
+}
+.search-btn:active {
+	background-color: #a50909;
+	color: white;
+	border-color: #a50909;
+	border-radius: 1px;
+}
 .search-input {
 	width: 70%;
     display: inline-block;
@@ -20,8 +32,6 @@
     border: 2px solid #ce0e0e;
 }
 .footer-main {
-	position: relative;
-	margin: 0;
-	padding-bottom: 2rem;
-	min-height: 100%;
+	width:100%;
+	height:100px;
 }

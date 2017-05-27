@@ -9,15 +9,16 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="/style/index.css">
   <link rel="stylesheet" type="text/css" href="/style/main_page.css">
+  <link rel="stylesheet" type="text/css" href="/style/loading_frame.css">
   <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
   <![endif]-->
 </head>
-<body ng-app="TwitchApp" style="height:100%">
-  <div class="container" ng-controller="StreamSearchController" style="width:100%;min-height:260px;background-color:#6441A4">
+<body ng-app="TwitchApp" ng-controller="StreamSearchController" style="height:100%">
+  <div class="container" style="width:100%;min-height:260px;background-color:#6441A4">
     <div class="top-title" style="text-align:center;margin-top:80px">
       <h1 style="color: white;margin-bottom:25px">
-        Get direct link for <a href="https://www.twitch.tv"><img src="/img/twitchlogo.png" style="width:3.5em"></a> stream
+        Get direct link for <a href="/"><img src="/img/twitchlogo.png" style="width:3.5em"></a> stream
       </h1>
       <div class="form-group" style="width:500px;margin:0 auto;float:none">
         <button class="btn btn-default search-btn" ng-click="checkField()">Search</button>
@@ -25,10 +26,11 @@
       </div>
     </div>
   </div>
-  <div ng-view class="container">
+  <div scope="" onload="" ng-view class="container main-view">
   </div>
+  <div ng-include="$root.loadingFrame" class="loading" style="display:none; height:500px"></div>
   <div class="footer-main" style="margin-top:20px; background: #414142">
-    <h3 style="text-align:center; color: #efeff2; padding-top: 35px">Twitch HLS Search</h3>
+    <h3 style="text-align:center; color: #efeff2; padding-top: 20px">Twitch HLS Search</h3>
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular-route.min.js"></script>
