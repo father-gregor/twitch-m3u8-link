@@ -2,16 +2,22 @@
 	margin-right: 10px;
     border-radius: 1px;
     color: white;
-    border-color: darkred;
-    background-color: darkred;
+    border-color: #ce0e0e;
+    background-color: #ce0e0e;
     margin-bottom: 2px;
+}
+.search-btn:hover {
+	background-color: #a50909;
+	color: white;
+	border-color: #a50909;
+	border-radius: 1px;
 }
 .search-input {
 	width: 70%;
     display: inline-block;
     border-radius: 1px;
     height: 33px;
-    border: 2px solid darkred;
+    border: 2px solid #ce0e0e;
 }
 .footer-main {
 	position: relative;

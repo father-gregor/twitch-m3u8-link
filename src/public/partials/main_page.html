@@ -1,16 +1,12 @@
- <div class="container">
-    <div class="row">
-        <div class="gallery col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <h1 class="gallery-title">Popular Channels</h1>
-        </div>
-        <div class="center-block">
-            <div ng-repeat="ch in popularChannelArray" ng-click="checkChannel(ch.channel.name)" class="channel_grid col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe" style="width:320px">
-                <img src="{{ch.preview.medium}}" class="img-responsive center-block">
-                <div class="col-md-12 info_grid" style="border: 1px solid #6441A4;border-radius: 0 0 5px 5px;height:120px">
-                    <h3>{{ch.channel.display_name}}</h3>
-                    <h4 title="{{ch.channel.status}}">{{substringUrl(ch.channel.status)}}</h4>
-                </div>
-            </div>
+<div class="row row-centered">
+    <div class="gallery col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <h1 class="gallery-title">Popular Channels</h1>
+    </div>
+    <div ng-repeat="ch in popularChannelArray" ng-click="checkChannel(ch.channel.name)" class="channel_grid col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe col-centered" style="width:320px">
+        <img src="{{ch.preview.medium}}" class="img-responsive center-block">
+        <div class="col-md-12 info_grid" style="border: 1px solid #6441A4;border-radius: 0 0 5px 5px;height:120px">
+            <h3>{{ch.channel.display_name}}</h3>
+            <h4 title="{{ch.channel.status}}">{{substringUrl(ch.channel.status)}}</h4>
         </div>
     </div>
 </div>
