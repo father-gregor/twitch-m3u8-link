@@ -1,5 +1,4 @@
 "use strict";
-var http = require("http");
 var agent = require("superagent");
 var check_live_stream = "https://api.twitch.tv/kraken/streams/"
 var hls_url =  {
