@@ -11,13 +11,25 @@ app.config(function($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
 })
 app.controller('MainPageController', function($rootScope, $scope, $http){
+	$scope.channelLimit = 0;
+	$scope.popularChannelArray = [];
 	$scope.loadPopularStream = function() {
-		$rootScope.showLoadingView(false);
-		$http.get("/api/get-popular-channel").then(function(res) {
-			$scope.popularChannelArray = res.data;
-			console.log(res.data);
-		});
+		console.log($scope.channelLimit + 25);
+		if($scope.channelLimit + 25 <= 100) {
+			$rootScope.showLoadingView(false);
+			$http.get("/api/get-popular-channel", {
+				params: {
+					"limit": $scope.channelLimit
+				}
+			}).then(function(res) {
+				$scope.popularChannelArray = $scope.popularChannelArray.concat(res.data);
+				$scope.channelLimit = $scope.channelLimit + 15;
+				loading = true;
+				console.log(res.data);
+			});
+		}
 	}
+	$scope.loadPopularStream();
 	$scope.checkChannel = function(name) {
 		console.log(name);
 		if(name !== null && name !== undefined) {
@@ -28,7 +40,15 @@ app.controller('MainPageController', function($rootScope, $scope, $http){
 	$scope.substringUrl = function(url) {
 		return url.length > 50 ? url.substring(0,50) + "...": url;
 	}
-	$scope.loadPopularStream();
+	var loading = true;
+	$(window).scroll(function() {
+		console.log("SCROLL");
+	    if(($(window).scrollTop() >= $(document).height() - $(window).height() - 200) && loading) {
+	    	console.log("BOTTOM");
+	    	loading = false;
+	    	$scope.loadPopularStream();
+	    }
+	});
 })
 app.controller('StreamSearchController', function($rootScope, $scope, $http, $location){
 	$rootScope.streamer = null;

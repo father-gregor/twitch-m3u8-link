@@ -1,6 +1,10 @@
 "use strict";
 var agent = require("superagent");
-var check_live_stream = "https://api.twitch.tv/kraken/streams/"
+var check_live_stream =  {
+	"base": "https://api.twitch.tv/kraken/streams/",
+	"limit": 25
+}
+var limit_strea
 var hls_url =  {
 	"base": "https://usher.ttvnw.net/api/channel/hls/",
 	"channel": null,
@@ -27,16 +31,21 @@ var client_id = "ta24w6i5cmq57c7mszjirohc2ub9ge";
 var stream_list = [];
 var response = null;
 
-function getPopularChannelList(resp) {
+function getPopularChannelList(resp, limit) {
 	agent
-		.get(check_live_stream)
+		.get(check_live_stream.base + "?limit=" + (check_live_stream.limit + limit))
 		.set("user-agent", "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36")
 		.set("client-id", client_id)
 		.end(function(err, res) {
 			if(err || !res.ok) {
 				console.log(err);
 			} else {
-				resp.send(res.body.streams)
+				var arrStreams = res.body.streams;
+				if(limit == 0) {
+					resp.send(arrStreams);
+				} else {
+					resp.send(arrStreams.slice(arrStreams.length - 15));
+				}
 			}
 		});
 }
@@ -45,7 +54,7 @@ function getHlsStream(channel, resp) {
 	response = resp;
 	access_token.channel = channel;
 	agent
-		.get(check_live_stream + channel)
+		.get(check_live_stream.base + channel)
 		.set("user-agent", "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36")
 		.set("client-id", client_id)
 		.end(function(err, res) {

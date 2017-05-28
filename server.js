@@ -8,7 +8,7 @@ app.set("port", (process.env.PORT || 5000));
 app.use(express.static(__dirname + "/src/public"));
 
 app.get("/", function(req, res) {
-  res.sendFile(__dirname + "/src/views/index.html");
+	res.sendFile(__dirname + "/src/views/index.html");
 });
 app.get("/api/get-channel", function(req, res) {
   var streamName = req.query.channel;
@@ -20,7 +20,12 @@ app.get("/api/get-channel", function(req, res) {
   }
 });
 app.get("/api/get-popular-channel", function(req, res) {
-	twitch.getPopularChannelList(res);
+	var limit = Number(req.query.limit);
+	if(limit !== null) {
+		twitch.getPopularChannelList(res, limit);
+	} else {
+		res.send({"error": ""})
+	}
 });
 app.get('*', function (req, res) {
     res.sendFile(__dirname + '/src/views/index.html');
