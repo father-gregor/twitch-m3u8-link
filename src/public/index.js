@@ -49,9 +49,9 @@ app.controller('StreamSearchController', function($rootScope, $scope, $http, $lo
 			console.log("Received");
 			console.log(res);
 			$rootScope.streamArray = res.data;
-			$rootScope.showLoadingView(false);
 			console.log($rootScope.streamArray);
 			$location.path("/search-list");
+			$rootScope.showLoadingView(false);
 		}, function(err) {
 			console.log(err);
 			$rootScope.showLoadingView(false);
