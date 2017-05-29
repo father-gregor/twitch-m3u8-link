@@ -13,6 +13,7 @@ app.config(function($routeProvider, $locationProvider) {
 app.controller('MainPageController', function($rootScope, $scope, $http){
 	$scope.channelLimit = 0;
 	$scope.popularChannelArray = [];
+	var showLoading = true;
 	$scope.loadPopularStream = function() {
 		console.log($scope.channelLimit + 25);
 		if($scope.channelLimit + 25 <= 100) {
@@ -24,7 +25,7 @@ app.controller('MainPageController', function($rootScope, $scope, $http){
 			}).then(function(res) {
 				$scope.popularChannelArray = $scope.popularChannelArray.concat(res.data);
 				$scope.channelLimit = $scope.channelLimit + 15;
-				loading = true;
+				updateGrid = true;
 				console.log(res.data);
 			});
 		}
@@ -33,6 +34,7 @@ app.controller('MainPageController', function($rootScope, $scope, $http){
 	$scope.checkChannel = function(name) {
 		console.log(name);
 		if(name !== null && name !== undefined) {
+			showLoading = false;
 			$rootScope.streamer = name;
 			$rootScope.getHlsStream($rootScope.streamer);
 		}
@@ -40,12 +42,12 @@ app.controller('MainPageController', function($rootScope, $scope, $http){
 	$scope.substringUrl = function(url) {
 		return url.length > 50 ? url.substring(0,50) + "...": url;
 	}
-	var loading = true;
+	var updateGrid = true;
 	$(window).scroll(function() {
 		console.log("SCROLL");
-	    if(($(window).scrollTop() >= $(document).height() - $(window).height() - 200) && loading) {
+	    if(($(window).scrollTop() >= $(document).height() - $(window).height() - 200) && updateGrid && showLoading) {
 	    	console.log("BOTTOM");
-	    	loading = false;
+	    	updateGrid = false;
 	    	$scope.loadPopularStream();
 	    }
 	});
