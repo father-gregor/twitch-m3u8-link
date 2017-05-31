@@ -26,6 +26,13 @@
     color: white;
     cursor: pointer;
 }
+.channel_grid.ng-enter {
+    transition: 1.0s linear all;
+    opacity: 0;
+}
+.channel_grid.ng-enter-active {
+    opacity: 1;
+}
 .info_grid h3 {
     margin-top: 20px;
 }

@@ -1,4 +1,4 @@
-var app = angular.module('TwitchApp', ["ngRoute"]);
+var app = angular.module("TwitchApp", ["ngRoute", "ngAnimate"]);
 app.config(function($routeProvider, $locationProvider) {
 	$routeProvider.when("/", {
 		templateUrl: "partials/main_page.html",
