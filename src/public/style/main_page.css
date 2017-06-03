@@ -44,6 +44,15 @@
     float:none;
     text-align:left;;
 }
+.viewers-info {
+    position:absolute; 
+    top:0; 
+    padding: 2px 5px 2px 5px;
+    border: 1px solid #6441A4;
+    border-radius: 0 0 10px 0;
+    background-color: #6441A4;
+    color: white;
+}
 .loader {
     border: 16px solid #f3f3f3;
     border-top: 16px solid #6441A4;
