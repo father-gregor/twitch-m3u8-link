@@ -54,7 +54,6 @@ app.controller('MainPageController', function($rootScope, $scope, $http){
 })
 app.controller('StreamSearchController', function($rootScope, $scope, $http, $location){
 	$rootScope.streamer = null;
-	$rootScope.loadingFrame = "partials/loading_frame.html";
 	$scope.checkField = function() {
 		if($rootScope.streamer !== null ) {
 			console.log("Input not empty");

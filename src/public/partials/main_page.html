@@ -1,4 +1,4 @@
-<div class="row row-centered">
+<div class="row row-centered" ng-hide="">
     <div class="gallery col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <h1 class="gallery-title">Popular Channels</h1>
     </div>
@@ -8,5 +8,10 @@
             <h3>{{ch.channel.display_name}}</h3>
             <h4 title="{{ch.channel.status}}">{{substringUrl(ch.channel.status)}}</h4>
         </div>
+    </div>
+</div>
+<div ng-include="loadingFrame" ng-hide="" class="loading" style="display:none; height:500px">
+    <div class="loader">
+        
     </div>
 </div>
