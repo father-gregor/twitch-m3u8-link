@@ -8,6 +8,9 @@ app.config(function($routeProvider, $locationProvider) {
 		templateUrl: "partials/quality_list.html",
 		controller: "StreamQualityListController"
 	});
+	$routeProvider.when("/not-found", {
+		templateUrl: "partials/not_found.html"
+	})
 	$locationProvider.html5Mode(true);
 })
 app.controller('StreamSearchController', function($rootScope, $scope, $http, $location){
@@ -31,8 +34,12 @@ app.controller('StreamSearchController', function($rootScope, $scope, $http, $lo
 			console.log("Received");
 			console.log(res);
 			$rootScope.streamArray = res.data;
+			if(!$scope.isError()) {
+				$location.path("/search-list");
+			} else {
+				$location.path("/not-found");
+			}
 			console.log($rootScope.streamArray);
-			$location.path("/search-list");
 		}, function(err) {
 			console.log(err);
 		});
@@ -53,6 +60,12 @@ app.controller('StreamSearchController', function($rootScope, $scope, $http, $lo
 			$(".loading").css("display", "none");
 			$(".main-view").css("display", "block");
 		}
+	}
+	$scope.isError = function() {
+		if(typeof $rootScope.streamArray != "undefined")
+			return $rootScope.streamArray.error;
+		else
+			$location.path("/");
 	}
 	$(".search-input").keypress(function(e) {
 		var key = e.which;
@@ -104,12 +117,6 @@ app.controller('MainPageController', function($rootScope, $scope, $http){
 	});
 })
 app.controller('StreamQualityListController', function($rootScope, $scope, $location){
-	$scope.isError = function() {
-		if(typeof $rootScope.streamArray != "undefined")
-			return $rootScope.streamArray.error;
-		else
-			$location.path("/");
-	}
 	$scope.substringUrl = function(url) {
 		return url.length > 100 ? url.substring(0,100) + "...": url;
 	}
