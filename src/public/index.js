@@ -17,7 +17,7 @@ app.controller('StreamSearchController', function($rootScope, $scope, $http, $lo
 		if(channel !== null) {
 			channel = $scope.parseChannelName(channel);
 			if(channel.length > 0) {
-				console.log("Input not empty");
+				console.log("Input not empty " + channel);
 				$scope.getHlsStream(channel.toLowerCase());
 			}
 		}
@@ -96,7 +96,7 @@ app.controller('MainPageController', function($rootScope, $scope, $http){
 	var updateGrid = true;
 	$(window).scroll(function() {
 		console.log("SCROLL");
-	    if(($(window).scrollTop() >= $(document).height() - $(window).height() - 200) && updateGrid && $scope.showLoading) {
+	    if(($(window).scrollTop() >= $(document).height() - $(window).height() - 200) && updateGrid) {
 	    	console.log("BOTTOM");
 	    	updateGrid = false;
 	    	$scope.loadPopularStream();
