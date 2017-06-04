@@ -5,6 +5,25 @@ html {
 }
 body {
   margin-bottom: 100px;
+  height:  100%;
+}
+.nav-searchbar {
+	width: 100%;
+	min-height: 260px;
+	background-color: #6441A4;
+}
+.nav-infotext {
+	color: white;
+	margin-bottom: 25px;
+}
+.input-box {
+	width: 500px;
+	margin: 0 auto;
+	float: none;
+}
+.top-title {
+	text-align: center;
+	margin-top: 80px;
 }
 .search-btn {
 	margin-right: 10px;
@@ -50,5 +69,10 @@ body {
   bottom: 0;
   width: 100%;
   height: 80px;
-  background-color: #f5f5f5;
+  background: #414142;
+}
+.footer-title {
+	text-align: center; 
+	color: #efeff2; 
+	padding-top: 10px;
 }
