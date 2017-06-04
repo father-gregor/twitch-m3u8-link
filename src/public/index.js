@@ -92,7 +92,7 @@ app.controller('MainPageController', function($rootScope, $scope, $http){
 				$scope.streamsLoading = null;
 				$scope.popularChannelArray = $scope.popularChannelArray.concat(res.data);
 				$scope.channelLimit = $scope.channelLimit + 15;
-				updateGrid = true;
+				updateStatus = true;
 				console.log(res.data);
 			});
 		}
@@ -102,6 +102,7 @@ app.controller('MainPageController', function($rootScope, $scope, $http){
 		console.log(name);
 		if(name !== null && name !== undefined) {
 			$scope.showLoading = true;
+			updateStatus = false;
 			$rootScope.streamer = name;
 			$rootScope.getHlsStream($rootScope.streamer);
 		}
@@ -109,12 +110,12 @@ app.controller('MainPageController', function($rootScope, $scope, $http){
 	$scope.substringUrl = function(url) {
 		return url.length > 50 ? url.substring(0,50) + "...": url;
 	}
-	var updateGrid = true;
+	var updateStatus = true;
 	$(window).scroll(function() {
 		console.log("SCROLL");
-	    if(($(window).scrollTop() >= $(document).height() - $(window).height() - 200) && updateGrid) {
+	    if(($(window).scrollTop() >= $(document).height() - $(window).height() - 200) && updateStatus) {
 	    	console.log("BOTTOM");
-	    	updateGrid = false;
+	    	updateStatus = false;
 	    	$scope.loadPopularStream();
 	    }
 	});
