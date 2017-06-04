@@ -79,14 +79,17 @@ app.controller('MainPageController', function($rootScope, $scope, $http){
 	$scope.channelLimit = 0;
 	$scope.popularChannelArray = [];
 	$scope.showLoading = false;
+	$scope.streamsLoading = null;
 	$scope.loadPopularStream = function() {
 		console.log($scope.channelLimit + 25);
 		if($scope.channelLimit + 25 <= 100) {
+			$scope.streamsLoading = "/partials/streams_loading.html";
 			$http.get("/api/get-popular-channel", {
 				params: {
 					"limit": $scope.channelLimit
 				}
 			}).then(function(res) {
+				$scope.streamsLoading = null;
 				$scope.popularChannelArray = $scope.popularChannelArray.concat(res.data);
 				$scope.channelLimit = $scope.channelLimit + 15;
 				updateGrid = true;
