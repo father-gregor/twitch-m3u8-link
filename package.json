@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Webtool for retrieving stream direct link",
   "engines": {
-    "node": "6.10.2"
+    "node": "6.11.1"
   },
   "main": "server.js",
   "scripts": {
